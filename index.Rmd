@@ -65,6 +65,9 @@ Para a estratégia de busca, incluímos na nossa revisão artigos em inglês de 
 
 ## Expressões de busca:  
 
+- "Psychedelic Therapy", “Psychedelics assisted Psychoterapy”. 
+A fórmula de busca principal é: (“Ketamine” OR "Ketamine Infusion") AND ("Ketamine assisted Psychotherapy" OR “Psychedelic assisted Therapy”)
+
 ### Scopus:  
 
 * Query:  ( TITLE-ABS-KEY ( ketamine OR "Ketamine Infusion" ) AND TITLE-ABS-KEY ( "Psychedelic Therapy" OR "Ketamine assisted Psychotherapy" OR "Psychedelic assisted Therapy" ) ) AND PUBYEAR > 2002 AND ( LIMIT-TO ( DOCTYPE , "ar" ) OR LIMIT-TO ( DOCTYPE , "re" ) ) AND ( LIMIT-TO ( OA , "all" ) )
@@ -87,7 +90,7 @@ Para a estratégia de busca, incluímos na nossa revisão artigos em inglês de 
 
 Abrindo o pacote de análise bibliométrica.  
 
-```{r}
+```{r include=FALSE}
 if (!require(bibliometrix)) {
   # Caso não esteja instalado, instala o pacote bibliometrix e suas dependências
   install.packages("bibliometrix", dependencies=TRUE)
@@ -105,15 +108,12 @@ if (!require(bibliometrix)) {
 
 ### Scopus
 ```{r message=FALSE, warning=FALSE, paged.print=FALSE}
-dados_scopus <- bibliometrix::convert2df("dados/scopus.bib", dbsource = "scopus", format = "bibtex")
-# kable(head(dados_scopus, 10))
-dplyr::glimpse(dados_scopus)
+dados_scopus <- bibliometrix::convert2df("dados/scopus.csv", dbsource = "scopus", format = "csv")
 ```
 
 ### Web of Science
-```{r}
+```{r message=FALSE, warning=FALSE, paged.print=FALSE}
 dados_wos <- bibliometrix::convert2df("dados/savedrecs.bib", dbsource = "isi", format = "bibtex")
-dplyr::glimpse(dados_wos)
 ```
 
 
@@ -121,8 +121,8 @@ dplyr::glimpse(dados_wos)
 
 ```{r}
 dados_brutos <- bibliometrix::mergeDbSources(dados_scopus, dados_wos, remove.duplicated = TRUE)
-dplyr::glimpse(dados_brutos)
 resumo <- bibliometrix::biblioAnalysis(dados_brutos)
+summary(object = resumo, k = 10, pause = FALSE)
 graficos_bibliometrix <- plot(resumo)
 ```
 
