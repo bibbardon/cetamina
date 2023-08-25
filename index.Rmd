@@ -91,12 +91,7 @@ A fórmula de busca principal é: (“Ketamine” OR "Ketamine Infusion") AND ("
 Abrindo o pacote de análise bibliométrica.  
 
 ```{r include=FALSE}
-if (!require(bibliometrix)) {
-  # Caso não esteja instalado, instala o pacote bibliometrix e suas dependências
-  install.packages("bibliometrix", dependencies=TRUE)
-  # Carrega novamente o pacote
-  library(bibliometrix)
-}
+	library(bibliometrix)
   library(knitr)
   library(kableExtra)
   library(htmltools)
